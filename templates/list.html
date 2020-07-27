@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block content %}
+    <table class="table m-5">
+      <thead>
+        <tr>
+          <th scope="col">id</th>
+          <th scope="col">user_id</th>
+          <th scope="col">real_name</th> 
+          <th scope="col">address</th>
+          <th scope="col" >ActivityPeriod<th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        {% for items in user %}
+        <tr>
+          <td>{{items.id}}</td>
+          <th scope="row">{{items.user_id}}</th>
+          <td>{{items.real_name}}</td>
+          <td>{{items.address}}</td>
+          <td><a href="javascript:void(0);" class="btn btn-info activity_period" data-id="{{items.id}}" role="button">View ActivityPeriod</a></td>
+        </tr>
+        {% endfor %}
+        
+      </tbody>
+    </table>
+    
+   
+
+   <div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">ActivityPeriod</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">start_time</th>
+                <th scope="col">end_time</th>
+                
+            </thead>
+            <tbody>
+
+           </tbody>
+           </table>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+    <script>
+      $( document ).ready(function() {
+        $('body').delegate('.activity_period','click',function(event) {
+          
+          $.ajax({
+                url: "activityPeriod",
+                data:{"user_id":$(this).attr('data-id')},
+                
+                success: function(result){
+                  var obj =""
+                  $.each( result, function( key, value ) {
+                     obj =obj+"<tr><td>"+value['start_time']+"</td><td>"+value['end_time']+"</td></tr>";
+                    });
+                  $("#myModal table.table tbody").html(obj);
+                }
+           });
+
+          $('#myModal').modal('show');
+        });
+      });
+    </script>
+  {% endblock %}
+

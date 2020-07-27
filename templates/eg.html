@@ -1,0 +1,39 @@
+
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Basic HTML Table</h2>
+
+<table style="width:100%">
+  <tr>
+    <th>user_id/th>
+    <th>real_name</th> 
+    <th>country</th>
+    <th>city</th>
+    <th>period star<th>
+    <th>period end<th>
+  </tr>
+  {% for items in bio %}
+  <tr>
+    <td>{{items.user_id}}</td>
+    <td>{{items.real_name}}</td>
+    <td>{{items.country}}</td>
+    <td>{{items.city}}</td>
+    {% for items in activity %}
+    
+    <td>{{items.start_time}}</td>
+    <td>{{items.end_time}}</td>
+
+    {% endfor %}
+
+  </tr>
+  {% endfor %}
+</table>
+
+</body>
+</html>
+
+
+
